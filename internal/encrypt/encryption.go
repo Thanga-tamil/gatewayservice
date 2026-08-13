@@ -9,7 +9,7 @@ import (
 )
 
 // GetAESEncrypted encrypts given text in AES 256 CBC
-func AesEncrypt(plaintext, key, iv string) (string, error) {
+func Encrypt(plaintext, key, iv string) (string, error) {
 
 	var plainTextBlock []byte
 	length := len(plaintext)
@@ -39,7 +39,7 @@ func AesEncrypt(plaintext, key, iv string) (string, error) {
 }
 
 // GetAESDecrypted decrypts given text in AES 256 CBC
-func AesDecrypt(encrypted, key, iv string) ([]byte, error) {
+func Decrypt(encrypted, key, iv string) ([]byte, error) {
 
 	ciphertext, err := base64.StdEncoding.DecodeString(encrypted)
 

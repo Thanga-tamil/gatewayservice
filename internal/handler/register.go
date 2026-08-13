@@ -1,29 +1,39 @@
 package handler
 
 import (
-	"fmt"
+	"encoding/json"
+	"gateway/internal/config"
 	"gateway/internal/encrypt"
+	log "gateway/internal/utils"
 
 	"github.com/gin-gonic/gin"
 )
 
 type user struct{
-	UserId string
-	Name string
-	mobileNumber int64
+	Msg string `json:"msg"`
+	Not string `json:"not"`
+}
+
+type registerPayload struct {
+	RegisterData string 
 }
 
 func RegisterUser(ginCtx *gin.Context){
-	var User user
-	if err := ginCtx.ShouldBindJSON(&User); err != nil {
-		panic(err)
-	}
-	fmt.Println("user: ", User)
-	decryptedData, err := encrypt.AesDecrypt("", "", "")
+	var input registerPayload
+	ginCtx.ShouldBindBodyWithJSON(&input)
+	licensekey := config.ChatSettings.Licensekey
+	iv := config.ChatSettings.IV
+
+	decryptedVal, err := encrypt.Decrypt(input.RegisterData, licensekey, iv)
 	if err != nil {
 		panic(err)
 	}
+	log.Info("decryptedVal: ", string(decryptedVal))
 
-	fmt.Println("decryptedData: ", string(decryptedData))
+	var damn user
+	if err := json.Unmarshal(decryptedVal, &damn); err != nil {
+		panic(err)
+	}
+	log.Infof("damn: %#v", damn)
 }
 

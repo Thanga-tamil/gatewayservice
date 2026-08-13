@@ -41,11 +41,11 @@ func NewLogger(logPath string){
 
 
 func Info(args ...interface{}) {
-	Log.Info(append([]interface{}{"✅  "}, args...)...)
+	Log.Info(append([]interface{}{""}, args...)...)
 }
 
 func Infof(template string, args ...interface{}) {
-	Log.Infof("✅  "+template, args...)
+	Log.Infof(template, args...)
 }
 
 func Error(args ...interface{}) {

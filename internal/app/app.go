@@ -25,13 +25,13 @@ func App() *gin.Engine {
 func Run(serve *gin.Engine, addr string){
 	log.Info(http_server_started, addr)
 	if err := serve.Run(addr); err != nil {
-		panic(err)
+		log.Fatalf(err.Error())
 	}
 }
 
 const(
-	connect_services 		= "CONNECTING TO DEPEND EXTERNAL I/O SERVICES"
-	services_connected 		= "ALL EXTERNAL DEPEND SERVICES CONNECTED SUCCESSFULLY"
-	starting_http_server 	= "Starting HTTP Server Using GIN"
-	http_server_started 	= "HTTP Web Server Started On Address: "
+	connect_services 		= "...CONNECTING TO DEPEND EXTERNAL I/O SERVICES"
+	services_connected 		= "✅ ALL EXTERNAL DEPEND SERVICES CONNECTED SUCCESSFULLY"
+	starting_http_server 	= "...Starting HTTP Server Using GIN"
+	http_server_started 	= "✅ HTTP Web Server Started On Address: "
 )
