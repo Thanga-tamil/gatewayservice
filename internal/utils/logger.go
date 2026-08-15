@@ -32,7 +32,7 @@ func NewLogger(logPath string){
 	core := zapcore.NewCore(
 		zapcore.NewConsoleEncoder(encoderConfig),
 		zapcore.NewMultiWriteSyncer(zapcore.AddSync(file), zapcore.AddSync(os.Stdout)),
-		zap.DebugLevel,
+		zap.InfoLevel,
 	)
 
 	logger := zap.New(core)
