@@ -28,7 +28,7 @@ func ValidateRegisterUserPayload(payload *utils.Data) error {
 
 
 func ProcessNewUserRegistration(reqCtx *gin.Context, payload *utils.Data) {
-	user := utils.Users{
+	user := utils.User{
 		UserId: payload.UserId,
 		Nickname: payload.NickName,
 		IsDeleted: false,
@@ -39,7 +39,7 @@ func ProcessNewUserRegistration(reqCtx *gin.Context, payload *utils.Data) {
 		MobileNumber: payload.MobileNumber,
 	}
 
-	if err := config.Psql.Create(user).Error; err != nil {
+	if err := config.Psql.Table("users").Create(user).Error; err != nil {
 		log.Error(err.Error())
 	}
 }

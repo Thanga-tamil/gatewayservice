@@ -15,7 +15,7 @@ type Data struct {
 	UserType           string
 }
 
-type Users struct {
+type User struct {
 	UserId     string   `gorm:"uniqueIndex;not null" json:"user_id,omitempty"`
 	Nickname   string   `gorm:"not null" json:"nickname,omitempty"`
 	IsDeleted   bool    `gorm:"not null" json:"is_deleted,omitempty"`
