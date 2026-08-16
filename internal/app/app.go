@@ -4,6 +4,7 @@ import (
 	"github.com/gin-gonic/gin"
 
 	"gateway/internal/config"
+	"gateway/internal/utils"
 	log "gateway/internal/utils"
 )
 
@@ -12,8 +13,11 @@ func App() *gin.Engine {
 
 	config.NewPostgreSql()
 
-	log.Info(services_connected) 
+	if err := utils.LoadJwtSecretKey(); err != nil {
+		panic(err)
+	}
 
+	log.Info(services_connected) 
 
 	log.Info(starting_http_server)
 

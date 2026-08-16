@@ -5,7 +5,6 @@ import (
 	"gateway/internal/router"
 	"gateway/internal/middleware"
 	log "gateway/internal/utils"
-
 )
 
 func main(){

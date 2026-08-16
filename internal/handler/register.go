@@ -25,7 +25,12 @@ func RegisterUser(ctx *gin.Context) {
 		processErr(ctx, err); return
 	}
 
-	res := map[string]string{"accessToken": ""}
+	token, err := service.GenerateAccessToken(userPayload.UserId)
+	if err != nil {
+		processErr(ctx, err); return
+	}
+
+	res := map[string]string{"accessToken": token}
 	response := model.Success(http.StatusOK, res, "User Registration Success")
 	ctx.JSON(http.StatusOK, response)
 }
