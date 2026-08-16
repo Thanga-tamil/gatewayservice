@@ -6,6 +6,12 @@ import (
 	"crypto/cipher"
 	"encoding/base64"
 	"fmt"
+	"gateway/internal/config"
+	log "gateway/internal/utils"
+	"io"
+	"net/http"
+
+	"github.com/gin-gonic/gin"
 )
 
 // GetAESEncrypted encrypts given text in AES 256 CBC
@@ -71,3 +77,22 @@ func PKCS5UnPadding(src []byte) []byte {
 
 	return src[:(length - unpadding)]
 }
+
+func Process(ctx *gin.Context){
+	jsonData, err := io.ReadAll(ctx.Request.Body)
+	if err != nil {
+		panic(err)
+	}
+
+	licensekey := config.ChatSettings.Licensekey
+	iv := config.ChatSettings.IV
+	encryptedVal, err := Encrypt(string(jsonData), licensekey, iv)
+	if err != nil {
+		panic(err)
+	}
+	log.Info("encryptedVal: ", encryptedVal)
+
+	ctx.JSON(http.StatusOK, map[string]string{"data": encryptedVal, "message": "Data Encrypted Successfull"})
+}
+
+
